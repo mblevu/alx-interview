@@ -1,16 +1,17 @@
+from collections import deque
 #!/usr/bin/python3
 """lockbox problem where each box may contain keys to the other boxes"""
 
-def canUnlockAll(boxes):
+def canUnlockAll(boxes) -> bool:
     visited_boxes = set()
+    queue = deque([0])  # Start with the first box
 
-    current_box = 0
-    visited_boxes.add(current_box)
+    while queue:
+        current_box = queue.popleft()
+        visited_boxes.add(current_box)
 
-    for box in boxes:
-        for key in box:
+        for key in boxes[current_box]:
             if key not in visited_boxes:
-                visited_boxes.add(key)
-                current_box = key
-                break
+                queue.append(key)
+
     return len(visited_boxes) == len(boxes)
