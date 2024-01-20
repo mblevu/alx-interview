@@ -16,10 +16,7 @@ def minOperations(n):
     """
     if n <= 1:
         return 0
-    min_ops = float('inf')
-
     for i in range(2, n + 1):
         if n % i == 0:
-            operations = minOperations(i) + n // i
-            min_ops = min(min_ops, operations)
-    return min_ops
+            return minOperations(int(n / i)) + i
+        return -1
