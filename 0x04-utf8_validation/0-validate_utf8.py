@@ -11,11 +11,12 @@ def validUTF8(data):
         if num_bytes == 0:
 
             for bit in bin_rep:
-                if bit == '0': break
+                if bit == '0':
+                    break
                 num_bytes += 1
             if num_bytes == 0:
                 continue
-            if  num_bytes == 1 or num_bytes > 4:
+            if num_bytes == 1 or num_bytes > 4:
                 return False
             else:
                 if not (bin_rep[0] == '1' and bin_rep[1] == '0'):
