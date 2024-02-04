@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""valid UTF-8 encoding module"""
+
 
 def validUtf8(self, data):
 """Determines if a give data set reps a valid utf-8 encoding
