@@ -1,8 +1,8 @@
+from typing import List
 #!/usr/bin/python3
 """valid UTF-8 encoding module"""
 
-
-def validUTF8(data):
+def validUTF8(data: List[int]) -> bool:
     """
     Determines if a given data set represents a valid UTF-8 encoding
     """
