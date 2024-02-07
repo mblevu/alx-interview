@@ -1,6 +1,7 @@
-from typing import List
 #!/usr/bin/python3
 """valid UTF-8 encoding module"""
+from typing import List
+
 
 def validUTF8(data: List[int]) -> bool:
     """
