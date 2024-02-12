@@ -1,7 +1,12 @@
 #!/usr/bin/python3
-"""reads stdin line by line and computes metrics. log"""
+"""log parsing module."""
 import sys
 
+def print_stats(total_size, status_codes):
+    print("Total file size:", total_size)
+    for code in sorted(status_codes.keys()):
+        if isinstance(code, int):
+            print(f"{code}: {status_codes[code]}")
 
 def parse_line(line):
     try:
@@ -10,40 +15,26 @@ def parse_line(line):
         status_code = int(parts[-2])
         file_size = int(parts[-1])
         return ip_address, status_code, file_size
-    except (ValueError, IndexError):
+    except (IndexError, ValueError):
         return None, None, None
 
-
-def print_statistics(total_size, status_counts):
-    print(f"Total file size: File size: {total_size}")
-    for code in sorted(status_counts.keys()):
-        if status_counts[code] > 0:
-            print(f"{code}: {status_counts[code]}")
-
-
-def main():
+def process_logs():
     total_size = 0
-    status_counts = {}
-    line_count = 0
+    status_codes = {}
 
     try:
-        for line in sys.stdin:
+        for i, line in enumerate(sys.stdin, start=1):
             ip_address, status_code, file_size = parse_line(line)
-            if ip_address is not None:
-                total_size += file_size
+            if ip_address is None:
+                continue
 
-                if status_code in [200, 301, 400, 401, 403, 404, 405, 500]:
-                    status_counts[status_code] = status_counts.get(
-                        status_code, 0) + 1
+            total_size += file_size
+            status_codes[status_code] = status_codes.get(status_code, 0) + 1
 
-                line_count += 1
+            if i % 10 == 0:
+                print_stats(total_size, status_codes)
 
-                if line_count == 10:
-                    print_statistics(total_size, status_counts)
-                    line_count = 0
     except KeyboardInterrupt:
-        print_statistics(total_size, status_counts)
+        print_stats(total_size, status_codes)
 
-
-if __name__ == "__main__":
-    main()
+process_logs()
