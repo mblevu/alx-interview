@@ -4,7 +4,16 @@
 
 def makeChange(coins, total):
     """
-    determines the fewest number of coins needed to meet a given amount
+    Calculates the minimum number of coins needed to make change
+    for a given total.
+
+    Args:
+        coins (list): List of coin denominations.
+        total (int): Total amount to make change for.
+
+    Returns:
+        int: Minimum number of coins needed to make change for the total.
+        Returns -1 if change cannot be made.
     """
     if total <= 0:
         return 0
